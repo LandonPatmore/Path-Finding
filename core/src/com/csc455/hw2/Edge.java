@@ -1,6 +1,8 @@
 package com.csc455.hw2;
 
-public class Edge {
+import java.util.Comparator;
+
+public class Edge implements Comparator<Edge> {
     private final Cell PARENT;
     private final Cell CHILD;
     private final int WEIGHT;
@@ -21,5 +23,12 @@ public class Edge {
 
     public int getWeight() {
         return WEIGHT;
+    }
+
+    @Override
+    public int compare(Edge e1, Edge e2) {
+        if (e1.WEIGHT < e2.WEIGHT) return -1;
+        if (e1.WEIGHT > e2.WEIGHT) return 1;
+        return 0;
     }
 }

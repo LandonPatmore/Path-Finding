@@ -30,19 +30,19 @@ public class Grid {
                 try {
                     val = Integer.parseInt(line[j]);
                 } catch (NumberFormatException e) {
-                    val = 100;
+                    val = Integer.MAX_VALUE;
                 }
 
                 grid[i][j] = new Cell(val);
-                System.out.print(grid[i][j].getValue() + " ");
             }
-            System.out.println();
         }
         called = true;
         System.out.println("\nFile read in.");
-        System.out.println("Adding Neighbors");
+        System.out.println("Adding Neighbors.");
         addEdges();
         System.out.println("Neighbors added.");
+        System.out.println("Resetting Cells.");
+        resetCells();
     }
 
     private static void addEdges() {
@@ -63,6 +63,14 @@ public class Grid {
             final Edge edge = new Edge(parent, child, weight);
             grid[i][j].addEdge(edge);
         } catch (IndexOutOfBoundsException ignored) {
+        }
+    }
+
+    private static void resetCells() {
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                grid[i][j].setValue(Integer.MAX_VALUE);
+            }
         }
     }
 
