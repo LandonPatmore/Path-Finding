@@ -13,7 +13,7 @@ public class Grid {
     public static void handleFile() {
         if (called) return;
 
-        final FileHandle f = Gdx.files.internal("data/grid.txt");
+        final FileHandle f = Gdx.files.internal("data/grid2.txt");
         final String input = f.readString();
         final String lines[] = input.split("\\r?\n");
 
@@ -59,7 +59,7 @@ public class Grid {
         try {
             final Cell parent = grid[i][j];
             final Cell child = grid[i + x[k]][j + y[k]];
-            final int weight = Math.abs(parent.getValue() - child.getValue());
+            final int weight = Math.abs(parent.getValue() + child.getValue());
             final Edge edge = new Edge(parent, child, weight);
             grid[i][j].addEdge(edge);
         } catch (IndexOutOfBoundsException ignored) {

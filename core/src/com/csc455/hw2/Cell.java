@@ -2,16 +2,27 @@ package com.csc455.hw2;
 
 import java.util.Comparator;
 
-public class Cell implements Comparator<Cell> {
+public class Cell implements Comparable<Cell> {
     private int value;
     private Edge[] edges;
     private boolean visited;
     private int edgeNum;
+    private Cell predecessor;
+    private String pathSymbol;
 
     public Cell(int value) {
         this.value = value;
         this.edges = new Edge[4];
         this.visited = false;
+        this.pathSymbol = ".";
+    }
+
+    public String getPathSymbol() {
+        return pathSymbol;
+    }
+
+    public void setPathSymbol(String pathSymbol) {
+        this.pathSymbol = pathSymbol;
     }
 
     public void addEdge(Edge e) {
@@ -21,8 +32,16 @@ public class Cell implements Comparator<Cell> {
         edgeNum++;
     }
 
+    public void setPredecessor(Cell predecessor) {
+        this.predecessor = predecessor;
+    }
+
     public void setValue(int value) {
         this.value = value;
+    }
+
+    public Cell getPredecessor() {
+        return predecessor;
     }
 
     public Edge[] getEdges() {
@@ -42,9 +61,9 @@ public class Cell implements Comparator<Cell> {
     }
 
     @Override
-    public int compare(Cell o1, Cell o2) {
-        if (o1.value < o2.value) return -1;
-        if (o1.value > o2.value) return 1;
+    public int compareTo(Cell o) {
+        if (this.value < o.value) return -1;
+        if (this.value > o.value) return 1;
         return 0;
     }
 }
