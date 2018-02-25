@@ -1,36 +1,46 @@
 package com.csc455.hw2;
 
+import com.badlogic.gdx.graphics.Color;
+
 import java.util.PriorityQueue;
 
 public class Dijkstra {
-    private static PriorityQueue<Cell> queue = new PriorityQueue<Cell>();
+    private static final PriorityQueue<Cell> queue = new PriorityQueue<Cell>();
     private static final Cell[][] grid = Grid.getGrid();
 
-    public static Cell run(int x, int y, int endX, int endY) {
-        Cell currentCell = grid[x][y];
-        currentCell.setValue(0);
+    public static void run(int x, int y, int endX, int endY) throws InterruptedException {
+        Cell c = grid[y][x];
 
-        currentCell.setVisited(true);
-        queue.add(currentCell);
+        c.setValue(0);
+        c.setVisited(true);
+        queue.add(c);
 
         while (!queue.isEmpty()) {
-            final Cell c = queue.poll();
+            Thread.sleep(1);
+            c = queue.poll();
             c.setVisited(true);
-            int distance;
+
             for (Edge e : c.getEdges()) {
-                if (e!= null && !e.getChild().isVisited()) {
-                    distance = Math.abs(e.getWeight() + c.getValue());
-                    if (distance < e.getChild().getValue()) {
-                        e.getChild().setValue(distance);
-                        e.getChild().setPredecessor(c);
-                        queue.add(e.getChild());
+                final Cell child = e == null ? null : e.getChild();
+                if (child != null && !child.isVisited()) {
+                    child.setColor(new Color(.2f,.2f,.2f, 1));
+                    int distance = Math.abs(e.getWeight() + c.getValue());
+
+                    if (distance < child.getValue()) {
+                        child.setValue(distance);
+                        child.setPredecessor(c);
+                        queue.add(child);
                     }
                 }
             }
             if (c == grid[endY][endX]) {
-                return c;
+                while(c != null){
+                    c.setPathSymbol("-");
+                    c.setColor(new Color(1,1,1,1));
+                    c = c.getPredecessor();
+                }
+                return;
             }
         }
-        return null;
     }
 }

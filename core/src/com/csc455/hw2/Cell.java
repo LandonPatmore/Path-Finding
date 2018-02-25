@@ -1,6 +1,6 @@
 package com.csc455.hw2;
 
-import java.util.Comparator;
+import com.badlogic.gdx.graphics.Color;
 
 public class Cell implements Comparable<Cell> {
     private int value;
@@ -9,12 +9,22 @@ public class Cell implements Comparable<Cell> {
     private int edgeNum;
     private Cell predecessor;
     private String pathSymbol;
+    private Color color;
 
     public Cell(int value) {
         this.value = value;
         this.edges = new Edge[4];
         this.visited = false;
         this.pathSymbol = ".";
+        this.color = new Color(1,0,0,1);
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     public String getPathSymbol() {

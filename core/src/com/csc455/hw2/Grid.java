@@ -17,14 +17,14 @@ public class Grid {
         final String input = f.readString();
         final String lines[] = input.split("\\r?\n");
 
-        final int x = lines[0].split(" ").length;
+        final int x = lines[0].split("\\t").length;
         final int y = lines.length;
 
         grid = new Cell[y][x];
         System.out.println("X: " + x + "\nY: " + y);
 
         for (int i = 0; i < lines.length; i++) {
-            String line[] = lines[i].split(" ");
+            String line[] = lines[i].split("\\t");
             for (int j = 0; j < line.length; j++) {
                 int val;
                 try {
