@@ -1,5 +1,7 @@
 package com.csc455.hw2;
 
+import com.badlogic.gdx.graphics.Color;
+
 import java.util.Comparator;
 
 public class Edge implements Comparator<Edge> {
@@ -11,6 +13,9 @@ public class Edge implements Comparator<Edge> {
         this.PARENT = parent;
         this.CHILD = child;
         this.WEIGHT = weight;
+//        if(weight > 500){
+//            CHILD.setColor(new Color(0,0,0,1));
+//        }
     }
 
     public Cell getParent() {

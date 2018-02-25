@@ -6,13 +6,10 @@ import com.badlogic.gdx.files.FileHandle;
 public class Grid {
 
     private static Cell grid[][];
-    private static boolean called = false;
     private static final int[] x = {0, 0, -1, 1};
     private static final int[] y = {-1, 1, 0, 0};
 
     public static void handleFile() {
-        if (called) return;
-
         final FileHandle f = Gdx.files.internal("data/grid2.txt");
         final String input = f.readString();
         final String lines[] = input.split("\\r?\n");
@@ -36,7 +33,6 @@ public class Grid {
                 grid[i][j] = new Cell(val);
             }
         }
-        called = true;
         System.out.println("\nFile read in.");
         System.out.println("Adding Neighbors.");
         addEdges();

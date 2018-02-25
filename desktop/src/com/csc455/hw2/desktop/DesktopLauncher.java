@@ -7,8 +7,8 @@ import com.csc455.hw2.PathFinder;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = 500;
-		config.height = 500;
+		config.width = 1000;
+		config.height = 1000;
 
 		new LwjglApplication(new PathFinder(), config);
 	}

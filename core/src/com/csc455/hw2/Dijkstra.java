@@ -5,10 +5,14 @@ import com.badlogic.gdx.graphics.Color;
 import java.util.PriorityQueue;
 
 public class Dijkstra {
-    private static final PriorityQueue<Cell> queue = new PriorityQueue<Cell>();
-    private static final Cell[][] grid = Grid.getGrid();
+    private final PriorityQueue<Cell> queue = new PriorityQueue<Cell>();
+    private final Cell[][] grid = Grid.getGrid();
 
-    public static void run(int x, int y, int endX, int endY) throws InterruptedException {
+    public Dijkstra(){
+
+    }
+
+    public void run(int x, int y, int endX, int endY) throws InterruptedException {
         Cell c = grid[y][x];
 
         c.setValue(0);
