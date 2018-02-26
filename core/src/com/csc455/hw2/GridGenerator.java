@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Random;
 
 public class GridGenerator {
-    private static String[][] board = new String[100][100];
+    private static String[][] board = new String[200][200];
     private static BufferedWriter bwriter;
 
     /**

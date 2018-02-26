@@ -50,7 +50,8 @@ class Dijkstra implements Runnable {
 
                 if (child != null && !child.isVisited()) {
                     if (!child.isImpassable() && !child.isTeleporter()) {
-                        child.setColor(new Color(.2f, .2f, .2f, 1));
+                        child.setColor(c.getColor());
+//                        child.setColor(new Color(.2f, .2f, .2f, 1));
                     }
                     int distance = Math.abs(e.getWeight() + c.getValue());
 

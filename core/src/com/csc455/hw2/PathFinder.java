@@ -37,8 +37,8 @@ public class PathFinder extends ApplicationAdapter implements InputProcessor {
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
 
-        camera = new OrthographicCamera(Grid.getX(), Grid.getY() * (h / w));
-        camera.setToOrtho(true, Grid.getX(), Grid.getY() * (h / w));
+        camera = new OrthographicCamera(50, 50 * (h / w));
+        camera.setToOrtho(true, 50, 50 * (h / w));
         camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
         camera.update();
 
@@ -48,6 +48,7 @@ public class PathFinder extends ApplicationAdapter implements InputProcessor {
     @Override
     public void render() {
         handleInput();
+        camera.update();
         shapeRenderer.setProjectionMatrix(camera.combined);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         generateGrid();
@@ -73,6 +74,18 @@ public class PathFinder extends ApplicationAdapter implements InputProcessor {
             }
             Grid.handleFile();
             grid = Grid.getGrid();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.Z)){
+            camera.zoom -= 0.2f;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.X)){
+            camera.zoom += 0.2f;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.UP)){
+            camera.translate(0, -1f);
+        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+            camera.translate(0, 1f);
+        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+            camera.translate(-1f, 0);
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+            camera.translate(1f, 0);
         }
     }
 
