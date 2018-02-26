@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 
 import java.util.PriorityQueue;
 
-public class Dijkstra implements Runnable {
+class Dijkstra implements Runnable {
     private final PriorityQueue<Cell> queue = new PriorityQueue<>();
     private final Cell[][] grid = Grid.getGrid();
 
@@ -13,13 +13,22 @@ public class Dijkstra implements Runnable {
     private final int END_X;
     private final int END_Y;
 
-    public Dijkstra(int x, int y, int endX, int endY) {
+    /**
+     * @param x    - start x
+     * @param y    - start y
+     * @param endX - end x
+     * @param endY - end y
+     */
+    Dijkstra(int x, int y, int endX, int endY) {
         this.X = x;
         this.Y = y;
         this.END_X = endX;
         this.END_Y = endY;
     }
 
+    /**
+     * Runs the algorithm
+     */
     public void run() {
 
         Cell c = grid[Y][X];
@@ -45,13 +54,13 @@ public class Dijkstra implements Runnable {
                     }
                     int distance = Math.abs(e.getWeight() + c.getValue());
 
-                    if (c instanceof tCell && child instanceof tCell) {
-                        ((tCell) c).setStart(true);
+                    if (c instanceof T_Cell && child instanceof T_Cell) {
+                        ((T_Cell) c).setStart(true);
 
                         setDistance(distance, c, child);
 
                         break;
-                    } else if (c instanceof tCell && !((tCell) c).isStart()) {
+                    } else if (c instanceof T_Cell && !((T_Cell) c).isStart()) {
                         setDistance(distance, c, child);
                     }
 
@@ -65,6 +74,13 @@ public class Dijkstra implements Runnable {
         }
     }
 
+    /**
+     * Checks to see if it can change the value of a cell and add a predecessor to it
+     *
+     * @param distance - the new distance
+     * @param c        - parent cell
+     * @param child    - child cell
+     */
     private void setDistance(int distance, Cell c, Cell child) {
         if (distance < child.getValue()) {
             child.setValue(distance);
@@ -73,6 +89,12 @@ public class Dijkstra implements Runnable {
         }
     }
 
+    /**
+     * Checks to see if the algorithm is done.  If it is, it builds the path on screen
+     *
+     * @param c - destination cell
+     * @return - whether or not the cell was found
+     */
     private boolean checkFound(Cell c) {
         if (c == grid[END_Y][END_X]) {
             int path = 0;

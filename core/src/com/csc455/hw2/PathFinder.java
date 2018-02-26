@@ -58,9 +58,12 @@ public class PathFinder extends ApplicationAdapter implements InputProcessor {
         shapeRenderer.dispose();
     }
 
+    /**
+     * Handles the input of the user
+     */
     private void handleInput() {
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            if(runner != null) {
+            if (runner != null) {
                 runner.interrupt();
             }
             try {
@@ -73,6 +76,9 @@ public class PathFinder extends ApplicationAdapter implements InputProcessor {
         }
     }
 
+    /**
+     * Generates the grid that is on screen
+     */
     private void generateGrid() {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         for (int i = 0; i < grid.length; i++) {

@@ -6,9 +6,14 @@ import java.io.IOException;
 import java.util.Random;
 
 public class GridGenerator {
-    static String[][] board = new String[100][100];
-    static BufferedWriter bwriter;
+    private static String[][] board = new String[100][100];
+    private static BufferedWriter bwriter;
 
+    /**
+     * Generates a grid file to be used
+     *
+     * @throws IOException - exception
+     */
     public static void generateFile() throws IOException {
         try {
             bwriter = new BufferedWriter(new FileWriter("../assets/data/grid3.txt"));
@@ -31,7 +36,7 @@ public class GridGenerator {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
                 if (board[i][j].equals("8")) {
-                    if(rand.nextFloat() > .99) {
+                    if (rand.nextFloat() > .99) {
                         board[i][j] = "T" + teleporterNumber;
 
                         int x = rand.nextInt(board.length - 1);

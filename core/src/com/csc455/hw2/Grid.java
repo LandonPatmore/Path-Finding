@@ -15,8 +15,11 @@ public class Grid {
     private static int xLength;
     private static int yLength;
 
-    private static ArrayList<tCell> teleporters = new ArrayList<>();
+    private static ArrayList<T_Cell> teleporters = new ArrayList<>();
 
+    /**
+     * Handles a file by taking it in and parsing it into a 2D Array
+     */
     public static void handleFile() {
         final FileHandle f = Gdx.files.internal("data/grid3.txt");
         final String input = f.readString();
@@ -39,9 +42,9 @@ public class Grid {
                     grid[i][j] = new Cell(val, false, false);
                 } catch (NumberFormatException e) {
                     if (line[j].equals("F")) {
-                        grid[i][j] = new iCell(Integer.MAX_VALUE, true, false);
+                        grid[i][j] = new I_Cell(Integer.MAX_VALUE, true, false);
                     } else if (line[j].contains("T")) {
-                        tCell t = new tCell(0, false, true, line[j]);
+                        T_Cell t = new T_Cell(0, false, true, line[j]);
                         teleporters.add(t);
                         grid[i][j] = t;
                     }
@@ -56,12 +59,15 @@ public class Grid {
         resetCells();
     }
 
+    /**
+     * Adds edges to a cell
+     */
     private static void addEdges() {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 for (int k = 0; k < x.length; k++) {
                     if (grid[i][j].isTeleporter()) {
-                        addTeleporter((tCell) grid[i][j]);
+                        addTeleporter((T_Cell) grid[i][j]);
                     }
                     attemptAdd(i, j, k);
                 }
@@ -69,11 +75,16 @@ public class Grid {
         }
     }
 
-    private static void addTeleporter(tCell c) {
+    /**
+     * Adds a teleporter to another teleporter
+     *
+     * @param c - child cell
+     */
+    private static void addTeleporter(T_Cell c) {
         if (teleporters.remove(c)) {
             Color color = new Color(new Random().nextFloat() + .5f, new Random().nextFloat() + .5f, new Random().nextFloat() + .5f, 1);
 
-            for (tCell t : teleporters) {
+            for (T_Cell t : teleporters) {
                 if (c.getName().equals(t.getName())) {
                     c.addEdge(new Edge(t, 0));
                     t.addEdge(new Edge(c, 0));
@@ -86,6 +97,13 @@ public class Grid {
         }
     }
 
+    /**
+     * Attempts to add a neighbor to a cell
+     *
+     * @param i - x value
+     * @param j - y value
+     * @param k - k value
+     */
     private static void attemptAdd(int i, int j, int k) {
         try {
             final Cell parent = grid[i][j];
@@ -97,6 +115,9 @@ public class Grid {
         }
     }
 
+    /**
+     * Resets the cells to Infinity after calculating their edge weights
+     */
     private static void resetCells() {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
@@ -105,14 +126,23 @@ public class Grid {
         }
     }
 
+    /**
+     * @return grid 2D Array
+     */
     public static Cell[][] getGrid() {
         return grid;
     }
 
+    /**
+     * @return x length
+     */
     public static int getX() {
         return xLength;
     }
 
+    /**
+     * @return y length
+     */
     public static int getY() {
         return yLength;
     }

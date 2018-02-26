@@ -2,19 +2,29 @@ package com.csc455.hw2;
 
 import java.util.Comparator;
 
-public class Edge implements Comparator<Edge> {
+class Edge implements Comparator<Edge> {
     private final Cell CHILD;
     private final int WEIGHT;
 
-    public Edge(Cell child, int weight) {
+    /**
+     * @param child  - child cell
+     * @param weight - weight of this edge
+     */
+    Edge(Cell child, int weight) {
         this.CHILD = child;
         this.WEIGHT = weight;
     }
 
+    /**
+     * @return child of this edge
+     */
     public Cell getChild() {
         return CHILD;
     }
 
+    /**
+     * @return weight
+     */
     public int getWeight() {
         return WEIGHT;
     }
