@@ -5,7 +5,6 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 
 public class Grid {

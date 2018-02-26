@@ -1,7 +1,5 @@
 package com.csc455.hw2;
 
-import com.badlogic.gdx.graphics.Color;
-
 public class tCell extends Cell {
 
     private String name;
