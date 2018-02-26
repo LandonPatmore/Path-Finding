@@ -4,19 +4,29 @@ import com.badlogic.gdx.graphics.Color;
 
 public class Cell implements Comparable<Cell> {
     private int value;
-    private Edge[] edges;
     private boolean visited;
     private int edgeNum;
     private Cell predecessor;
-    private String pathSymbol;
     private Color color;
+    private boolean impassable;
+    private boolean teleporter;
+    protected Edge[] edges;
 
-    public Cell(int value) {
+    public Cell(int value, boolean impassable, boolean teleporter) {
         this.value = value;
         this.edges = new Edge[4];
         this.visited = false;
-        this.pathSymbol = ".";
-        this.color = new Color(1,0,0,1);
+        this.color = new Color(1,1,1,1);
+        this.impassable = impassable;
+        this.teleporter = teleporter;
+    }
+
+    public boolean isTeleporter() {
+        return teleporter;
+    }
+
+    public boolean isImpassable() {
+        return impassable;
     }
 
     public Color getColor() {
@@ -27,17 +37,7 @@ public class Cell implements Comparable<Cell> {
         this.color = color;
     }
 
-    public String getPathSymbol() {
-        return pathSymbol;
-    }
-
-    public void setPathSymbol(String pathSymbol) {
-        this.pathSymbol = pathSymbol;
-    }
-
     public void addEdge(Edge e) {
-        if (edgeNum == 4) return;
-
         edges[edgeNum] = e;
         edgeNum++;
     }

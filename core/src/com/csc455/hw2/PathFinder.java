@@ -1,17 +1,17 @@
 package com.csc455.hw2;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
-import java.util.PriorityQueue;
+import java.io.IOException;
 
 public class PathFinder extends ApplicationAdapter implements InputProcessor {
 
@@ -19,28 +19,30 @@ public class PathFinder extends ApplicationAdapter implements InputProcessor {
     private Cell[][] grid;
     private OrthographicCamera camera;
     private Vector2 cell1;
-    private Vector2 cell2;
 
+    private Thread runner;
 
     @Override
     public void create() {
         shapeRenderer = new ShapeRenderer();
-        float w = Gdx.graphics.getWidth();
-        float h = Gdx.graphics.getHeight();
-        camera = new OrthographicCamera(100, 100 * (h / w));
-        camera.setToOrtho(true, 100, 100 * (h / w));
-        camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
-        camera.update();
 
+        try {
+            GridGenerator.generateFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Grid.handleFile();
         grid = Grid.getGrid();
 
+        float w = Gdx.graphics.getWidth();
+        float h = Gdx.graphics.getHeight();
+
+        camera = new OrthographicCamera(Grid.getX(), Grid.getY() * (h / w));
+        camera.setToOrtho(true, Grid.getX(), Grid.getY() * (h / w));
+        camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
+        camera.update();
+
         Gdx.input.setInputProcessor(this);
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
     }
 
     @Override
@@ -51,8 +53,21 @@ public class PathFinder extends ApplicationAdapter implements InputProcessor {
         generateGrid();
     }
 
+    @Override
+    public void dispose() {
+        shapeRenderer.dispose();
+    }
+
     private void handleInput() {
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            if(runner != null) {
+                runner.interrupt();
+            }
+            try {
+                GridGenerator.generateFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             Grid.handleFile();
             grid = Grid.getGrid();
         }
@@ -62,8 +77,8 @@ public class PathFinder extends ApplicationAdapter implements InputProcessor {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
-                shapeRenderer.setColor(grid[j][i].getColor());
-                shapeRenderer.rect(i, j, 1, 1);
+                shapeRenderer.setColor(grid[i][j].getColor());
+                shapeRenderer.rect(j, i, 1, 1);
             }
         }
         shapeRenderer.end();
@@ -91,23 +106,14 @@ public class PathFinder extends ApplicationAdapter implements InputProcessor {
         if (button != Input.Buttons.LEFT || pointer > 0) return false;
         camera.unproject(tp.set(screenX, screenY, 0));
         Vector2 con = new Vector2(tp.x, tp.y);
-        grid[(int) Math.floor(tp.y)][(int) Math.floor(tp.x)].setColor(new Color(0, 1, 1, 1));
+        grid[(int) Math.floor(tp.y)][(int) Math.floor(tp.x)].setColor(new Color(1, 0, 0, 1));
 
         if (cell1 == null) {
             cell1 = con;
         } else {
-            cell2 = con;
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        new Dijkstra().run((int) Math.floor(cell1.x), (int) Math.floor(cell1.y), (int) Math.floor(cell2.x), (int) Math.floor(cell2.y));
-                        cell1 = null;
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
+            runner = new Thread(new Dijkstra((int) Math.floor(cell1.x), (int) Math.floor(cell1.y), (int) Math.floor(con.x), (int) Math.floor(con.y)));
+            runner.start();
+            cell1 = null;
         }
         return true;
     }
@@ -130,20 +136,5 @@ public class PathFinder extends ApplicationAdapter implements InputProcessor {
     @Override
     public boolean scrolled(int amount) {
         return false;
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void dispose() {
-
     }
 }
