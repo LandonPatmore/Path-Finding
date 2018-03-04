@@ -10,8 +10,8 @@ class Dijkstra implements Runnable {
 
     private final int X;
     private final int Y;
-    private final int END_X;
-    private final int END_Y;
+    final int END_X;
+    final int END_Y;
 
     /**
      * @param x    - start x
@@ -39,7 +39,7 @@ class Dijkstra implements Runnable {
 
         while (!queue.isEmpty()) {
             try {
-                Thread.sleep(1);
+                Thread.sleep(0);
             } catch (InterruptedException ignored) {
             }
             c = queue.poll();
@@ -49,11 +49,7 @@ class Dijkstra implements Runnable {
                 final Cell child = e == null ? null : e.getChild();
 
                 if (child != null && !child.isVisited()) {
-                    if (!child.isImpassable() && !child.isTeleporter()) {
-                        child.setColor(c.getColor());
-//                        child.setColor(new Color(.2f, .2f, .2f, 1));
-                    }
-                    int distance = Math.abs(e.getWeight() + c.getValue());
+                    int distance = calculateDistance(e, c, child);
 
                     if (c instanceof T_Cell && child instanceof T_Cell) {
                         ((T_Cell) c).setStart(true);
@@ -66,6 +62,9 @@ class Dijkstra implements Runnable {
                     }
 
                     setDistance(distance, c, child);
+                    if (!child.isImpassable() && !child.isTeleporter()) {
+                        child.setColor(new Color(.2f, .2f, .2f, 1));
+                    }
                 }
 
                 if (checkFound(c)) {
@@ -73,6 +72,17 @@ class Dijkstra implements Runnable {
                 }
             }
         }
+    }
+
+    /**
+     * Adds the distance of the parent value and edge weight
+     * @param e - edge
+     * @param p - parent cell
+     * @param c - child cell
+     * @return distance
+     */
+    public int calculateDistance(Edge e, Cell p, Cell c) {
+        return Math.abs(e.getWeight() + p.getValue());
     }
 
     /**

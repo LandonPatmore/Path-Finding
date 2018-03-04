@@ -11,8 +11,8 @@ class T_Cell extends Cell {
      * @param teleporter - is it a teleporter
      * @param name       - name of this cell
      */
-    T_Cell(int value, boolean impassable, boolean teleporter, String name) {
-        super(value, impassable, teleporter);
+    T_Cell(int value, boolean impassable, boolean teleporter, String name, int x, int y) {
+        super(value, impassable, teleporter,x,y);
 
         super.edges = new Edge[5];
         this.name = name;

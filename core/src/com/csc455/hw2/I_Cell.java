@@ -9,10 +9,10 @@ class I_Cell extends Cell {
      * @param impassable - is this cell impassable
      * @param teleporter - is this cell teleporter
      */
-    I_Cell(int value, boolean impassable, boolean teleporter) {
-        super(value, impassable, teleporter);
+    I_Cell(int value, boolean impassable, boolean teleporter, int x, int y) {
+        super(value, impassable, teleporter, x, y);
         if (impassable) {
-            super.setColor(new Color(.5f, .5f, .5f, 1));
+            super.setColor(new Color(1, 1, 0, 1));
         }
     }
 }

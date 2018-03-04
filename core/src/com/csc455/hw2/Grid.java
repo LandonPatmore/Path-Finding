@@ -39,12 +39,12 @@ public class Grid {
             for (int j = 0; j < line.length; j++) {
                 try {
                     int val = Integer.parseInt(line[j]);
-                    grid[i][j] = new Cell(val, false, false);
+                    grid[i][j] = new Cell(val, false, false, j, i);
                 } catch (NumberFormatException e) {
                     if (line[j].equals("F")) {
-                        grid[i][j] = new I_Cell(Integer.MAX_VALUE, true, false);
+                        grid[i][j] = new I_Cell(Integer.MAX_VALUE, true, false, j, i);
                     } else if (line[j].contains("T")) {
-                        T_Cell t = new T_Cell(0, false, true, line[j]);
+                        T_Cell t = new T_Cell(0, false, true, line[j], j, i);
                         teleporters.add(t);
                         grid[i][j] = t;
                     }

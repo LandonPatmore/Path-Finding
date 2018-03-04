@@ -10,6 +10,8 @@ class Cell implements Comparable<Cell> {
     private Color color;
     private boolean impassable;
     private boolean teleporter;
+    private final int X;
+    private final int Y;
     Edge[] edges;
 
     /**
@@ -17,13 +19,32 @@ class Cell implements Comparable<Cell> {
      * @param impassable - is it impassable
      * @param teleporter - is it a teleporter
      */
-    Cell(int value, boolean impassable, boolean teleporter) {
+    Cell(int value, boolean impassable, boolean teleporter, int x, int y) {
         this.value = value;
         this.edges = new Edge[4];
         this.visited = false;
-        this.color = new Color(1, 1, 1, 1);
+        this.color = new Color((float) value / 10, (float) value / 10, (float) value / 10, 1);
         this.impassable = impassable;
         this.teleporter = teleporter;
+
+        this.X = x;
+        this.Y = y;
+    }
+
+    /**
+     *
+     * @return x position
+     */
+    public int getX() {
+        return X;
+    }
+
+    /**
+     *
+     * @return y position
+     */
+    public int getY() {
+        return Y;
     }
 
     /**

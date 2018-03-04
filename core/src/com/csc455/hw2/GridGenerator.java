@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Random;
 
 public class GridGenerator {
-    private static String[][] board = new String[200][200];
+    private static String[][] board = new String[100][100];
     private static BufferedWriter bwriter;
 
     /**
@@ -35,22 +35,22 @@ public class GridGenerator {
         int teleporterNumber = 1;
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                if (board[i][j].equals("8")) {
-                    if (rand.nextFloat() > .99) {
-                        board[i][j] = "T" + teleporterNumber;
-
-                        int x = rand.nextInt(board.length - 1);
-                        int y = rand.nextInt(board.length - 1);
-
-                        while (board[x][y].contains("F") || board[x][y].contains("T")) {
-                            x = rand.nextInt(board.length - 1);
-                            y = rand.nextInt(board.length - 1);
-                        }
-
-                        board[x][y] = "T" + teleporterNumber;
-                        teleporterNumber++;
-                    }
-                }
+//                if (board[i][j].equals("8")) {
+//                    if (rand.nextFloat() > .99) {
+//                        board[i][j] = "T" + teleporterNumber;
+//
+//                        int x = rand.nextInt(board.length - 1);
+//                        int y = rand.nextInt(board.length - 1);
+//
+//                        while (board[x][y].contains("F") || board[x][y].contains("T")) {
+//                            x = rand.nextInt(board.length - 1);
+//                            y = rand.nextInt(board.length - 1);
+//                        }
+//
+//                        board[x][y] = "T" + teleporterNumber;
+//                        teleporterNumber++;
+//                    }
+//                }
                 bwriter.write(board[i][j] + " ");
             }
             bwriter.newLine();

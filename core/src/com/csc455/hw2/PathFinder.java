@@ -22,6 +22,8 @@ public class PathFinder extends ApplicationAdapter implements InputProcessor {
 
     private Thread runner;
 
+    private boolean algorithm = false;
+
     @Override
     public void create() {
         shapeRenderer = new ShapeRenderer();
@@ -74,18 +76,22 @@ public class PathFinder extends ApplicationAdapter implements InputProcessor {
             }
             Grid.handleFile();
             grid = Grid.getGrid();
-        } else if (Gdx.input.isKeyPressed(Input.Keys.Z)){
+        } else if (Gdx.input.isKeyPressed(Input.Keys.Z)) {
             camera.zoom -= 0.2f;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.X)){
+        } else if (Gdx.input.isKeyPressed(Input.Keys.X)) {
             camera.zoom += 0.2f;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.UP)){
+        } else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             camera.translate(0, -1f);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             camera.translate(0, 1f);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             camera.translate(-1f, 0);
-        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             camera.translate(1f, 0);
+        } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            algorithm = false;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            algorithm = true;
         }
     }
 
@@ -130,7 +136,11 @@ public class PathFinder extends ApplicationAdapter implements InputProcessor {
         if (cell1 == null) {
             cell1 = con;
         } else {
-            runner = new Thread(new Dijkstra((int) Math.floor(cell1.x), (int) Math.floor(cell1.y), (int) Math.floor(con.x), (int) Math.floor(con.y)));
+            if (algorithm) {
+                runner = new Thread(new AStar((int) Math.floor(cell1.x), (int) Math.floor(cell1.y), (int) Math.floor(con.x), (int) Math.floor(con.y)));
+            } else {
+                runner = new Thread(new Dijkstra((int) Math.floor(cell1.x), (int) Math.floor(cell1.y), (int) Math.floor(con.x), (int) Math.floor(con.y)));
+            }
             runner.start();
             cell1 = null;
         }
