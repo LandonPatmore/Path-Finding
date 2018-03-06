@@ -66,14 +66,14 @@ public class PathFinder extends ApplicationAdapter implements InputProcessor {
      */
     private void handleInput() {
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            if (runner != null) {
-                runner.interrupt();
-            }
-            try {
-                GridGenerator.generateFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            if (runner != null) {
+//                runner.interrupt();
+//            }
+//            try {
+//                GridGenerator.generateFile();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
             Grid.handleFile();
             grid = Grid.getGrid();
         } else if (Gdx.input.isKeyPressed(Input.Keys.Z)) {

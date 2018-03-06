@@ -24,11 +24,11 @@ public class GridGenerator {
         Random rand = new Random();
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                int r = rand.nextInt(9);
-                board[i][j] = String.valueOf(r);
-                if (board[i][j].equals("0")) {
-                    board[i][j] = "F";
-                }
+//                int r = rand.nextInt(9);
+                board[i][j] = String.valueOf(1);
+//                if (board[i][j].equals("0")) {
+//                    board[i][j] = "F";
+//                }
             }
         }
 

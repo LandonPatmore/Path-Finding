@@ -39,7 +39,7 @@ class Dijkstra implements Runnable {
 
         while (!queue.isEmpty()) {
             try {
-                Thread.sleep(0);
+                Thread.sleep(10);
             } catch (InterruptedException ignored) {
             }
             c = queue.poll();
