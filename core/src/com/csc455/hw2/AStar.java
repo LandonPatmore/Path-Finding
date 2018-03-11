@@ -20,6 +20,7 @@ public class AStar extends Dijkstra {
      */
     @Override
     public int calculateDistance(Edge e, Cell p, Cell c) {
-        return Math.abs(e.getWeight() + p.getValue()) + (Math.abs(END_X - c.getX()) + Math.abs(END_Y - c.getY()));
+        return Math.abs(e.getWeight() + p.getValue()) + (Math.abs(END_X - c.getX()) + Math.abs(END_Y - c.getY()
+        );
     }
 }
